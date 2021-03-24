@@ -18,19 +18,21 @@ def cloneNode(update,context):
     else:
         username = ""
     name = f'<a href="tg://user?id={update.message.from_user.id}">{update.message.from_user.first_name}{last_name}</a>'
+    if username is not None:
+            cc = f'\n\n<b>Cloned by :</b> {username}'
 
     args = update.message.text.split(" ",maxsplit=1)
     if len(args) > 1:
         link = args[1]
-        msg = f'Cloning...... \n' \
+        msg = f'<b>Cloning......</b> \n\n' \
               f'<b>User :</b> {username}\n' \
-              f'<b>Link :</b> <a href="{link}">{link}</a>'
+              f'<b>Link :</b> <a href="{link}"><code>{link}</code></a>'
         sendMessage(msg, context.bot, update)
         gd = GoogleDriveHelper()
         result, button = gd.clone(link)
         LOGGER.info('ID: {} - Username: {} - Message: {}'.format(update.message.chat.id,update.message.chat.username,update.message.text))
         # deleteMessage(context.bot,msg)
-        sendMarkup(result,context.bot,update,button)
+        sendMarkup(result + cc,context.bot,update,button)
     else:
         sendMessage("Provide G-Drive Shareable Link to Clone.",context.bot,update)
 
