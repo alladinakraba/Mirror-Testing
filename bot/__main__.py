@@ -52,6 +52,7 @@ Type /{BotCommands.HelpCommand} to get a list of available commands
 @run_async
 def restart(update, context):
     restart_message = sendMessage("Restarting, Please wait!", context.bot, update)
+    LOGGER.info(f'Restarting the Bot...')
     # Save restart message object in order to reply to it after restarting
     fs_utils.clean_all()
     with open('restart.pickle', 'wb') as status:
@@ -110,6 +111,7 @@ def main():
         with open('restart.pickle', 'rb') as status:
             restart_message = pickle.load(status)
         restart_message.edit_text("Restarted Successfully!")
+        LOGGER.info('Restarted Successfully!')
         remove('restart.pickle')
 
     start_handler = CommandHandler(BotCommands.StartCommand, start,
