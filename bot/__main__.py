@@ -132,6 +132,7 @@ def main():
     dispatcher.add_handler(stats_handler)
     dispatcher.add_handler(log_handler)
     updater.start_polling()
+    bot.send_message(-1001169663200, "Bot Restarted Due To Heavy Load!")
     LOGGER.info("Bot Started!")
     signal.signal(signal.SIGINT, fs_utils.exit_clean_up)
 
